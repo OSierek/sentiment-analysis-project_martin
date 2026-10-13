@@ -1,11 +1,20 @@
 import argparse
+import os
+from joblib import dump
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline, make_pipeline
 
-from src.save_model import save_model
+def save_model(model: Pipeline, model_path: str) -> None:
+    """
+    Saves the trained model to a file.
+    """
+    os.makedirs(os.path.dirname(model_path), exist_ok=True)
+    dump(model, model_path)
+    print(f"Saved model to {model_path}")
 
 def load_and_validate_data(data_path: str) -> pd.DataFrame:
     """
